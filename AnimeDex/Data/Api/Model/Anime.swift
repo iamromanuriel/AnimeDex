@@ -5,13 +5,15 @@
 //  Created by Roman Uriel on 22/01/25.
 //
 
-struct AnimeBody: Decodable {
-    let data: DataBody?
-}
+/**
+ * Strunct for body main (Touse only screen main)
+ */
 
-struct DataBody: Decodable {
+struct DataBodyAnimeBasic: Decodable {
     let mal_id: Int?
     let url: String?
-    let approved: Bool?
+    let images: ImagesResponse?
     let title: String?
+    let type: String?
+    let rank: Int?
 }

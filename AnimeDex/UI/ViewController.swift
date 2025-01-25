@@ -11,14 +11,15 @@ class ViewController: ObservableObject {
     
     
     func fetchData()  {
-        let url  = "https://api.jikan.moe/v4/anime/19/full"
-        print(url)
+        let url  = "https://api.jikan.moe/v4/top/characters"
+        
         
         AF.request(url, method: .get)
-            .responseDecodable(of: AnimeBody.self) { response in
+            .responseDecodable(of: (ResponseBody<DataBodyCharacterBasic>.self)) { response in
                 switch response.result {
                 case .success(let value):
-                    print("Success: \(value)")
+                    let listMaild = value.data.map(\.self.images)
+                    print("Success: \(listMaild)")
                 case .failure(let error):
                     print("Error: \(error)")
                 }
