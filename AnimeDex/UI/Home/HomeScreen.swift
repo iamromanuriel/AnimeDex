@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct HomeScreen: View {
+    @StateObject var viewModel: HomeViewModel = HomeViewModel()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            List(viewModel.topAnimes) { anime in
+                Text(anime.title ?? "")
+            }
+        }.onAppear {
+            viewModel.loadTopAnimes()
+        }
+        
     }
 }
 

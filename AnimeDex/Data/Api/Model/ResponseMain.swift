@@ -6,5 +6,5 @@
 //
 
 struct ResponseBody< T: Decodable >: Decodable {
-    let data: [T]
+    let data: T
 }
