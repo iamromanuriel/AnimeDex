@@ -7,17 +7,19 @@
 import SwiftUI
 
 struct CardBasic: View {
-    var body: some View {
+    let anime : DataBodyAnimeBasic?
+    let character: DataBodyCharacterBasic?
     
+    var body: some View {
         ZStack {
             ZStack {
-                AsyncImage(url: URL(string: "https://cdn.myanimelist.net/images/anime/10/18793.jpg"))
+                AsyncImage(url: URL(string: (anime?.images?.jpg?.imageUrl ?? character?.images?.jpg?.imageUrl) ?? ""))
                     .aspectRatio(contentMode: .fit)
             }
             LinearGradient(gradient: Gradient(colors: [.clear, .white]), startPoint: .top, endPoint: .bottom)
             VStack(alignment: .leading) {
                 ReferenceItem()
-                Text("Title")
+                Text(anime?.title ?? character?.name ?? "")
                     .font(.headline)
                     .foregroundColor(.gray)
                 
@@ -46,5 +48,5 @@ struct ReferenceItem: View {
 }
 
 #Preview {
-    CardBasic()
+    
 }

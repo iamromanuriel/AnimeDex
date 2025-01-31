@@ -9,17 +9,35 @@ import SwiftUI
 
 struct HomeScreen: View {
     @StateObject var viewModel: HomeViewModel = HomeViewModel()
+    let colums = [GridItem(.fixed(30))]
+    
     var body: some View {
-        VStack {
-            List(viewModel.topAnimes) { anime in
-                Text(anime.title ?? "")
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: colums){
+                ForEach(viewModel.topAnimes) { anime in
+                    CardBasic(anime: anime, character: nil)
+                }
             }
-        }.onAppear {
+        }.onAppear{
             viewModel.loadTopAnimes()
         }
         
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: colums){
+                ForEach(viewModel.topCharacters) { character in
+                    CardBasic(anime: nil, character: character)
+                }
+            }
+        }.onAppear{
+            viewModel.loadTopCharacters()
+        }
+         
+        Text("hello")
+        
     }
+    
 }
+
 
 #Preview {
     HomeScreen()
