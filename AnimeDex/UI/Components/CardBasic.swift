@@ -48,5 +48,5 @@ struct ReferenceItem: View {
 }
 
 #Preview {
-    
+    //CardBasic(anime: DataBodyAnimeBasic?(id_t: 1), character: nil)
 }

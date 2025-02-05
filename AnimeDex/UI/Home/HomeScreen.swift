@@ -10,8 +10,10 @@ import SwiftUI
 struct HomeScreen: View {
     @StateObject var viewModel: HomeViewModel = HomeViewModel()
     let colums = [GridItem(.fixed(30))]
+    @State private var selectedIndex = 0
     
     var body: some View {
+        
         ScrollView(.horizontal) {
             LazyHGrid(rows: colums){
                 ForEach(viewModel.topAnimes) { anime in
@@ -31,8 +33,6 @@ struct HomeScreen: View {
         }.onAppear{
             viewModel.loadTopCharacters()
         }
-         
-        Text("hello")
         
     }
     
