@@ -9,7 +9,7 @@
  * Strunct for body main (Touse only screen main)
  */
 
-struct DataBodyAnimeBasic: Identifiable, Decodable {
+struct DataBodyAnimeBasic: Identifiable, Decodable{
     let mal_id: Int?
     let url: String?
     let images: ImagesResponse?

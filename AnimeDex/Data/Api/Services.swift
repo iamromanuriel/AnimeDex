@@ -53,7 +53,8 @@ class Api {
                     }
                 }
         }
-        .eraseToAnyPublisher() }
+        .eraseToAnyPublisher()
+    }
     
 }
 

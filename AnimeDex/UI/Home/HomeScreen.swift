@@ -8,34 +8,99 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @StateObject var viewModel: HomeViewModel = HomeViewModel()
-    let colums = [GridItem(.fixed(30))]
-    @State private var selectedIndex = 0
+    @StateObject var viewModel = HomeViewModel()
+    @State private var scrollPosition: ScrollPosition = .init(idType: DataBodyAnimeBasic.ID.self)
+    let skateSize: CGSize = .init(width: 72, height: 300)
+    var body: some View {
+        GeometryReader{ proxy in
+            ScrollView(.horizontal, showsIndicators: false){
+                LazyHGrid(rows: [GridItem()]){
+                    ForEach(viewModel.topAnimes){ anime in
+                        
+                        CardImage(imageUrl: anime.images?.jpg?.imageUrl, title: anime.title)
+                            .scrollTransition{ content, phase in
+                                content.scaleEffect(phase.isIdentity ? 1: 0.7)
+                            }
+                            .onTapGesture {
+                                print("tap", anime)
+                            }
+                        /*drawsateBoard(title: item.title, color: item.color)
+                            .id(item)
+                            .scrollTransition { content, phase in
+                                content.scaleEffect(phase.isIdentity ? 1 : 0.5)
+                            }
+                            .onTapGesture {
+                                print("tap", item)
+                            }
+                         */
+                    }
+                }
+                .scrollTargetLayout()
+            }
+            .safeAreaPadding(.horizontal, max((proxy.size.width - skateSize.width) / 2, 0))
+            .scrollTargetBehavior(.viewAligned)
+            .scrollPosition($scrollPosition, anchor: .center)
+        }
+        .onAppear(perform: viewModel.loadTopAnimes)
+        .frame(height: skateSize.height)
+        Text(scrollPosition.viewID(type: ColorDemoModel.self)?.summery ?? "Shingeki no kiojin")
+    }
+       
+}
+@ViewBuilder private func drawsateBoard(title: String, color: Color) -> some View {
+    UnevenRoundedRectangle(topLeadingRadius: 48, bottomLeadingRadius: 20, bottomTrailingRadius: 20, topTrailingRadius: 48, style: .circular)
+        .fill(color.gradient)
+        .frame(width: 70, height: 300)
+        .overlay{
+            Text(title)
+                .font(.system(size: 56, weight: .bold, design: .rounded))
+                .fixedSize()
+                .rotationEffect(.degrees(-45))
+                .foregroundStyle(.gray.gradient)
+                .blendMode(.multiply)
+        }.clipped()
+}
+
+
+struct ColorDemoModel: Identifiable, Hashable, Sendable {
+    let id: UUID = .init()
+    let title: String
+    let summery: String
+    let color: Color
+    
+    static let allItems: [ColorDemoModel] = [
+        ColorDemoModel(title: "Red", summery: "A bold color", color: .red),
+        ColorDemoModel(title: "Green", summery: "A refreshing color", color: .green),
+        ColorDemoModel(title: "Blue", summery: "A calming color", color: .blue),
+        ColorDemoModel(title: "Yellow", summery: "A cheerful color", color: .yellow),
+        ColorDemoModel(title: "Purple", summery: "A mysterious color", color: .purple),
+        ColorDemoModel(title: "Orange", summery: "A vibrant color", color: .orange),
+        ColorDemoModel(title: "Pink", summery: "A soft and feminine color", color: .pink),
+        
+    ]
+}
+
+
+
+struct AutoScroller: View{
+    var topAnimes: [DataBodyAnimeBasic]
+    let timer = Timer.publish(every: 3.0, on: .main, in: .common).autoconnect()
+    @State private var selectedIndex: Int = 0
     
     var body: some View {
-        
-        ScrollView(.horizontal) {
-            LazyHGrid(rows: colums){
-                ForEach(viewModel.topAnimes) { anime in
-                    CardBasic(anime: anime, character: nil)
+        ZStack{
+            Color.secondary.ignoresSafeArea()
+            
+            TabView(selection: $selectedIndex){
+                ForEach(topAnimes){ anime in
+                    CardImage(imageUrl: anime.images?.jpg?.imageUrl, title: anime.title)
                 }
-            }
-        }.onAppear{
-            viewModel.loadTopAnimes()
+            }.frame(height: 600)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .ignoresSafeArea()
+            
         }
-        
-        ScrollView(.horizontal) {
-            LazyHGrid(rows: colums){
-                ForEach(viewModel.topCharacters) { character in
-                    CardBasic(anime: nil, character: character)
-                }
-            }
-        }.onAppear{
-            viewModel.loadTopCharacters()
-        }
-        
     }
-    
 }
 
 

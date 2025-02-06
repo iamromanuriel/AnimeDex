@@ -33,6 +33,21 @@ struct CardBasic: View {
     }
 }
 
+
+struct CardImage: View {
+    let imageUrl: String?
+    let title: String?
+    
+    var body: some View {
+        VStack{
+            AsyncImage(url: URL(string: imageUrl ?? ""))
+                .aspectRatio(contentMode: .fit)
+                .cornerRadius(16)
+        }.clipped()
+    }
+}
+
+
 struct ReferenceItem: View {
     var body: some View {
         ZStack {
@@ -47,6 +62,10 @@ struct ReferenceItem: View {
     }
 }
 
+
+
 #Preview {
-    //CardBasic(anime: DataBodyAnimeBasic?(id_t: 1), character: nil)
+    CardImage(
+        imageUrl: "https://cdn.myanimelist.net/images/anime/1208/94745.jpg",
+        title: "Full metal alquimist")
 }
