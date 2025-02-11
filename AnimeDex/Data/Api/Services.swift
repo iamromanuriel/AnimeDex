@@ -46,7 +46,7 @@ class Api {
                         if let data = response.data, let apiError = try? JSONDecoder().decode(APIError.self, from: data) {
                             promise(.failure(apiError))
                         } else {
-                            // Si no podemos decodificar un error específico, generamos un error genérico
+                        
                             let unknownError = APIError(code: 500, message: "Unknown error")
                             promise(.failure(unknownError))
                         }

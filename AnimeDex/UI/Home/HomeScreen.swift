@@ -12,38 +12,55 @@ struct HomeScreen: View {
     @State private var scrollPosition: ScrollPosition = .init(idType: DataBodyAnimeBasic.ID.self)
     let skateSize: CGSize = .init(width: 72, height: 300)
     var body: some View {
-        GeometryReader{ proxy in
-            ScrollView(.horizontal, showsIndicators: false){
-                LazyHGrid(rows: [GridItem()]){
-                    ForEach(viewModel.topAnimes){ anime in
-                        
-                        CardImage(imageUrl: anime.images?.jpg?.imageUrl, title: anime.title)
-                            .scrollTransition{ content, phase in
-                                content.scaleEffect(phase.isIdentity ? 1: 0.7)
-                            }
-                            .onTapGesture {
-                                print("tap", anime)
-                            }
-                        /*drawsateBoard(title: item.title, color: item.color)
-                            .id(item)
-                            .scrollTransition { content, phase in
-                                content.scaleEffect(phase.isIdentity ? 1 : 0.5)
-                            }
-                            .onTapGesture {
-                                print("tap", item)
-                            }
-                         */
-                    }
+        VStack{
+            GeometryReader{ proxy in
+                ScrollView(.horizontal, showsIndicators: false){
+                    LazyHGrid(rows: [GridItem()]){
+                        ForEach(viewModel.topAnimes){ anime in
+                            
+                            CardImage(imageUrl: anime.images?.jpg?.imageUrl, title: anime.title)
+                                .scrollTransition{ content, phase in
+                                    content.scaleEffect(phase.isIdentity ? 1: 0.7)
+                                }
+                                .onTapGesture {
+                                    print("tap", anime)
+                                }
+                        }
+                    }.scrollTargetLayout()
                 }
-                .scrollTargetLayout()
+                .safeAreaPadding(.horizontal, max((proxy.size.width - skateSize.width) / 2, 0))
+                .scrollTargetBehavior(.viewAligned)
+                .foregroundColor(.red)
+                .scrollPosition($scrollPosition, anchor: .center)
             }
-            .safeAreaPadding(.horizontal, max((proxy.size.width - skateSize.width) / 2, 0))
-            .scrollTargetBehavior(.viewAligned)
-            .scrollPosition($scrollPosition, anchor: .center)
+            .onAppear(perform: viewModel.loadTopAnimes)
+            .frame(height: skateSize.height)
+            
+            GeometryReader{ proxy in
+                ScrollView(.horizontal, showsIndicators: false){
+                    LazyHGrid(rows: [GridItem()]){
+                        ForEach(viewModel.topCharacters){ character in
+                            
+                            CardImage(imageUrl: character.images?.jpg?.imageUrl, title: character.name)
+                                .scrollTransition{ content, phase in
+                                    content.scaleEffect(phase.isIdentity ? 1: 0.7)
+                                }
+                                .onTapGesture {
+                                    print("tap", character)
+                                }
+                        }
+                    }.scrollTargetLayout()
+                }
+                .safeAreaPadding(.horizontal, max((proxy.size.width - skateSize.width) / 2, 0))
+                .scrollTargetBehavior(.viewAligned)
+                .foregroundColor(.red)
+                .scrollPosition($scrollPosition, anchor: .center)
+            }
+            .onAppear(perform: viewModel.loadTopCharacters)
+            .frame(height: skateSize.height)
         }
-        .onAppear(perform: viewModel.loadTopAnimes)
-        .frame(height: skateSize.height)
-        Text(scrollPosition.viewID(type: ColorDemoModel.self)?.summery ?? "Shingeki no kiojin")
+        
+        
     }
        
 }
