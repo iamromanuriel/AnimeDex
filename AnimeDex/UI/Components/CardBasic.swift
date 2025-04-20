@@ -62,10 +62,61 @@ struct ReferenceItem: View {
     }
 }
 
+struct ItemCarousel: View {
+    var body: some View {
+        ZStack {
+            AsyncImage(url: URL(string: "https://cdn.myanimelist.net/images/anime/1208/94745.jpg")) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipped()
+            } placeholder: {
+                Color.gray
+                    .frame(height: 300)
+            }
+            
+            VStack(alignment: .center) {
+                
+                Spacer()
+                
+                Text("Full metal alchemist brotherhood")
+                    .foregroundColor(.white)
+                    .font(.title2)
+                    .bold()
+                
+                HStack{
+                    ZStack(alignment: .trailing) {
+                        
+                        Text("Action").foregroundColor(.white).padding(4)
+                    }
+                    .background(Color.black.opacity(0.5))
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    
+                    Text("1 temporada").foregroundColor(.white)
+                }
+                
+                Text("Edward Elric y su hermano Alphonse se unen para encontrar la Piedra Filosofal, un objeto capaz de revertir el engaño causado por la muerte de su madre.")
+                    .foregroundColor(.white).padding()
+                
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                LinearGradient(
+                        gradient: Gradient(colors: [Color.black.opacity(0.9), Color.clear]),
+                        startPoint: .bottom,
+                        endPoint: .top
+                    )
+            )
+            
+            
+        }.frame(maxWidth: .infinity, maxHeight: 600)
+    }
+}
+
 
 
 #Preview {
-    CardImage(
-        imageUrl: "https://cdn.myanimelist.net/images/anime/1208/94745.jpg",
-        title: "Full metal alquimist")
+    ItemCarousel()
+    Spacer()
 }

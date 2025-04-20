@@ -13,28 +13,10 @@ struct HomeScreen: View {
     let skateSize: CGSize = .init(width: 72, height: 300)
     var body: some View {
         VStack{
-            GeometryReader{ proxy in
-                ScrollView(.horizontal, showsIndicators: false){
-                    LazyHGrid(rows: [GridItem()]){
-                        ForEach(viewModel.topAnimes){ anime in
-                            
-                            CardImage(imageUrl: anime.images?.jpg?.imageUrl, title: anime.title)
-                                .scrollTransition{ content, phase in
-                                    content.scaleEffect(phase.isIdentity ? 1: 0.7)
-                                }
-                                .onTapGesture {
-                                    print("tap", anime)
-                                }
-                        }
-                    }.scrollTargetLayout()
-                }
-                .safeAreaPadding(.horizontal, max((proxy.size.width - skateSize.width) / 2, 0))
-                .scrollTargetBehavior(.viewAligned)
-                .foregroundColor(.red)
-                .scrollPosition($scrollPosition, anchor: .center)
-            }
-            .onAppear(perform: viewModel.loadTopAnimes)
-            .frame(height: skateSize.height)
+            Text("Top Animes")
+                
+        
+            
             
             GeometryReader{ proxy in
                 ScrollView(.horizontal, showsIndicators: false){
@@ -58,9 +40,13 @@ struct HomeScreen: View {
             }
             .onAppear(perform: viewModel.loadTopCharacters)
             .frame(height: skateSize.height)
-        }
-        
-        
+        }.frame(maxWidth: .infinity)
+            .toolbar{
+                ToolbarItem(placement: .principal){
+                    Text("This is my title").foregroundStyle(.black)
+                        
+                }
+            }
     }
        
 }

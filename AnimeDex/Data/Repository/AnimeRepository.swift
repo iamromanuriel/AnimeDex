@@ -7,7 +7,6 @@
 
 import Combine
 
-
 class AnimeRepository{
     private let api: Api
     
@@ -19,6 +18,5 @@ class AnimeRepository{
         let url = "https://api.jikan.moe/v4/top/anime"
         
         return api.request(url: url)
-            
     }
 }
