@@ -10,46 +10,45 @@ import SwiftUI
 struct HomeScreen: View {
     @StateObject var viewModel = HomeViewModel()
     @State private var scrollPosition: ScrollPosition = .init(idType: DataBodyAnimeBasic.ID.self)
+    @State private var currentIndex: UUID = UUID()
+    let colores: [Color] = [.red, .blue, .green, .yellow, .orange]
     let skateSize: CGSize = .init(width: 72, height: 300)
     var body: some View {
         VStack{
-            Text("Top Animes")
+            ScrollView(){
+                TabView(selection: $currentIndex){
+                    ForEach(viewModel.recommendedAnimes){ anime in
+                        ItemCarousel(anime: anime).tag(anime.id)
+                    }
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .frame(height: 600)
+                .onAppear(){
+                    viewModel.loadRecommendedAnimes()
+                }
                 
-        
-            
-            
-            GeometryReader{ proxy in
-                ScrollView(.horizontal, showsIndicators: false){
-                    LazyHGrid(rows: [GridItem()]){
-                        ForEach(viewModel.topCharacters){ character in
-                            
-                            CardImage(imageUrl: character.images?.jpg?.imageUrl, title: character.name)
-                                .scrollTransition{ content, phase in
-                                    content.scaleEffect(phase.isIdentity ? 1: 0.7)
-                                }
-                                .onTapGesture {
-                                    print("tap", character)
-                                }
-                        }
-                    }.scrollTargetLayout()
+                ListAnimeTop(
+                    onClick: {},
+                    animes: viewModel.topAnimes
+                ).onAppear{
+                    viewModel.loadTopAnimes()
                 }
-                .safeAreaPadding(.horizontal, max((proxy.size.width - skateSize.width) / 2, 0))
-                .scrollTargetBehavior(.viewAligned)
-                .foregroundColor(.red)
-                .scrollPosition($scrollPosition, anchor: .center)
-            }
-            .onAppear(perform: viewModel.loadTopCharacters)
-            .frame(height: skateSize.height)
-        }.frame(maxWidth: .infinity)
-            .toolbar{
-                ToolbarItem(placement: .principal){
-                    Text("This is my title").foregroundStyle(.black)
-                        
+                
+                ListCharacterTop(
+                    onClick: {  },
+                    characters: viewModel.topCharacters
+                ).onAppear{
+                    viewModel.loadTopCharacters()
                 }
             }
+        }
     }
        
 }
+
+
+
+
 @ViewBuilder private func drawsateBoard(title: String, color: Color) -> some View {
     UnevenRoundedRectangle(topLeadingRadius: 48, bottomLeadingRadius: 20, bottomTrailingRadius: 20, topTrailingRadius: 48, style: .circular)
         .fill(color.gradient)
@@ -96,15 +95,16 @@ struct AutoScroller: View{
             
             TabView(selection: $selectedIndex){
                 ForEach(topAnimes){ anime in
-                    CardImage(imageUrl: anime.images?.jpg?.imageUrl, title: anime.title)
+                    CardImage(imageUrl: anime.images?.jpg?.imageUrl)
                 }
-            }.frame(height: 600)
+            }.frame(height: 400)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .ignoresSafeArea()
             
         }
     }
 }
+
 
 
 #Preview {

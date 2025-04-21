@@ -19,4 +19,11 @@ class AnimeRepository{
         
         return api.request(url: url)
     }
+    
+    func getRecommendedAnimes() -> AnyPublisher<ResponseBody<[DataBodyAnimeRecommendation]>, APIError>{
+        let url = "https://api.jikan.moe/v4/recommendations/anime"
+        
+        return api.request(url: url)
+    }
+    
 }

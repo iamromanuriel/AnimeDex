@@ -9,11 +9,13 @@ import Foundation
 import Combine
 
 class HomeViewModel: ObservableObject {
+    
     private let animeRepository: AnimeRepository
     private let characterRepository: CharacterRepository
     private var cancellables = Set<AnyCancellable>()
     @Published var topAnimes: [DataBodyAnimeBasic] = []
     @Published var topCharacters: [DataBodyCharacterBasic] = []
+    @Published var recommendedAnimes: [DataBodyAnimeRecommendation] = []
     
     init(animeRepository: AnimeRepository = AnimeRepository(api: Api.shared), characterRepository: CharacterRepository = CharacterRepository(api: Api.shared)) {
         self.animeRepository = animeRepository
@@ -30,7 +32,6 @@ class HomeViewModel: ObservableObject {
                     break
                 }
             }, receiveValue: { response in
-                
                 self.topAnimes = response.data
             }).store(in: &cancellables)
     }
@@ -40,7 +41,7 @@ class HomeViewModel: ObservableObject {
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
-                    print("Error: \(error)")
+                    print("Error : \(error)")
                 case .finished:
                     break
                 }
@@ -48,4 +49,20 @@ class HomeViewModel: ObservableObject {
                 self.topCharacters = response.data
             }).store(in: &cancellables)
     }
+    
+    func loadRecommendedAnimes() {
+        animeRepository.getRecommendedAnimes()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error recommended: \(error)")
+                case .finished:
+                break
+                }
+               
+            }, receiveValue: { response in
+                self.recommendedAnimes = response.data
+            }).store(in: &cancellables)
+    }
+    
 }

@@ -36,16 +36,42 @@ struct CardBasic: View {
 
 struct CardImage: View {
     let imageUrl: String?
-    let title: String?
     
     var body: some View {
-        VStack{
-            AsyncImage(url: URL(string: imageUrl ?? ""))
-                .aspectRatio(contentMode: .fit)
-                .cornerRadius(16)
-        }.clipped()
+        ZStack {
+            AsyncImage(url: URL(string: imageUrl ?? "")) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 180, height: 250)
+                    .clipped()
+            } placeholder: {
+                Color.gray
+                    .frame(width: 180, height: 250)
+            }
+
+            LinearGradient(
+                gradient: Gradient(colors: [Color.black.opacity(0.4), .clear]),
+                startPoint: .topTrailing,
+                endPoint: .leading
+            )
+
+            VStack {
+                HStack {
+                    Spacer()
+                    Image(systemName: "line.horizontal.3")
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                Spacer()
+            }
+        }
+        .frame(width: 180, height: 250)
+        .cornerRadius(16)
+        .clipped()
     }
 }
+
 
 
 struct ReferenceItem: View {
@@ -63,9 +89,11 @@ struct ReferenceItem: View {
 }
 
 struct ItemCarousel: View {
+    var anime: DataBodyAnimeRecommendation
+    
     var body: some View {
         ZStack {
-            AsyncImage(url: URL(string: "https://cdn.myanimelist.net/images/anime/1208/94745.jpg")) { image in
+            AsyncImage(url: URL(string: anime.entry.last?.images?.jpg?.largeImageUrl ?? "")) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -80,7 +108,7 @@ struct ItemCarousel: View {
                 
                 Spacer()
                 
-                Text("Full metal alchemist brotherhood")
+                Text(anime.entry.last?.title ?? "")
                     .foregroundColor(.white)
                     .font(.title2)
                     .bold()
@@ -96,17 +124,19 @@ struct ItemCarousel: View {
                     Text("1 temporada").foregroundColor(.white)
                 }
                 
-                Text("Edward Elric y su hermano Alphonse se unen para encontrar la Piedra Filosofal, un objeto capaz de revertir el engaño causado por la muerte de su madre.")
+                Text(anime.content ?? "")
                     .foregroundColor(.white).padding()
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
-                LinearGradient(
-                        gradient: Gradient(colors: [Color.black.opacity(0.9), Color.clear]),
+                ForEach(/*@START_MENU_TOKEN@*/0 ..< 5/*@END_MENU_TOKEN@*/) { item in
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]),
                         startPoint: .bottom,
                         endPoint: .top
                     )
+                }
             )
             
             
@@ -116,7 +146,8 @@ struct ItemCarousel: View {
 
 
 
+
+
 #Preview {
-    ItemCarousel()
-    Spacer()
+    CardImage(imageUrl: "https://cdn.myanimelist.net/images/anime/10/47347.jpg")
 }
