@@ -12,14 +12,21 @@ class HomeViewModel: ObservableObject {
     
     private let animeRepository: AnimeRepository
     private let characterRepository: CharacterRepository
+    private let producersRepository: ProducersRepository
     private var cancellables = Set<AnyCancellable>()
     @Published var topAnimes: [DataBodyAnimeBasic] = []
     @Published var topCharacters: [DataBodyCharacterBasic] = []
     @Published var recommendedAnimes: [DataBodyAnimeRecommendation] = []
+    @Published var producers: [DataBodyProducersBasic] = []
     
-    init(animeRepository: AnimeRepository = AnimeRepository(api: Api.shared), characterRepository: CharacterRepository = CharacterRepository(api: Api.shared)) {
+    init(
+        animeRepository: AnimeRepository = AnimeRepository(api: Api.shared),
+        characterRepository: CharacterRepository = CharacterRepository(api: Api.shared),
+        producerRepository: ProducersRepository = ProducersRepository(api: Api.shared)
+    ) {
         self.animeRepository = animeRepository
         self.characterRepository = characterRepository
+        self.producersRepository = producerRepository
     }
     
     func loadTopAnimes() {
@@ -62,6 +69,34 @@ class HomeViewModel: ObservableObject {
                
             }, receiveValue: { response in
                 self.recommendedAnimes = response.data
+            }).store(in: &cancellables)
+    }
+    
+    func loadProducers() {
+        producersRepository.getProducers()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error producers: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: { response in
+                self.producers = response.data
+            }).store(in: &cancellables)
+    }
+    
+    func loadAnimeDetail(){
+        animeRepository.getAnimeDetail(id:"52991")
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error detail: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: { response in
+                print(response)
             }).store(in: &cancellables)
     }
     

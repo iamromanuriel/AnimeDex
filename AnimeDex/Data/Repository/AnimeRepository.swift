@@ -14,9 +14,13 @@ class AnimeRepository{
         self.api = api
     }
     
+    func getAnimeDetail(id: String) -> AnyPublisher<ResponseBody<DataBodyAnimeDetail>, APIError>{
+        let url = "https://api.jikan.moe/v4/anime/\(id)"
+        return api.request(url: url)
+    }
+    
     func getTopAnimes() -> AnyPublisher<ResponseBody<[DataBodyAnimeBasic]>, APIError>{
         let url = "https://api.jikan.moe/v4/top/anime"
-        
         return api.request(url: url)
     }
     

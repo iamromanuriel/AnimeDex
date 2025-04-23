@@ -12,7 +12,7 @@ import Alamofire
 struct AnimeDexApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeScreen()
+            DetailAnimeScreen()
         }
     }
 }

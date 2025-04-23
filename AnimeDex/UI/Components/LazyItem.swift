@@ -71,7 +71,59 @@ struct ExampleAlign: View {
         }
 }
 
+struct ItemCircle: View {
+    let produce: DataBodyProducersBasic
+    
+    var body: some View {
+        VStack{
+            AsyncImage(url: URL(string: produce.images?.jpg?.imageUrl ?? "")) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame( height: 100)
+                    .background(.gray)
+                    .clipped()
+            } placeholder: {
+                Color.gray
+                    .frame( height: 100)
+            }
+            
+            Text(produce.titles.first?.title ?? "").padding()
+        }
+        
+    }
+}
+
+
+struct ItemEpisode: View {
+    var body: some View {
+        VStack{
+            HStack{
+                Text("Bouken no Owari")
+                    .foregroundColor(.white)
+                    .bold()
+                Spacer()
+                Text("Sep 2023")
+                    .foregroundColor(.white)
+                    
+            }
+            
+            HStack{
+                Text("The Journey's End")
+                    .foregroundColor(.white)
+                Spacer()
+                Text("The Journey's End")
+                    .foregroundColor(.white)
+            }
+        }.padding()
+    }
+}
+
+
 #Preview {
-    ExampleAlign()
+    HStack{
+        ItemEpisode()
+    }.background(.black)
+    
 }
 

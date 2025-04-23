@@ -145,9 +145,71 @@ struct ItemCarousel: View {
 }
 
 
+struct ImageDetail: View {
+    var imageUrl: String
+    var title: String
+    
+    var body: some View {
+        ZStack {
+            AsyncImage(url: URL(string: imageUrl)) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipped()
+            } placeholder: {
+                Color.gray
+                    .frame(height: 300)
+            }
+            
+            VStack(alignment: .center) {
+                Spacer()
+                Text(title)
+                    .font(.title)
+                    .bold()
+                    .foregroundColor(.white)
+                    .padding()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                ForEach(/*@START_MENU_TOKEN@*/0 ..< 5/*@END_MENU_TOKEN@*/) { item in
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]),
+                        startPoint: .bottom,
+                        endPoint: .top
+                    )
+                }
+            )
+            
+            
+        }.frame(maxWidth: .infinity, maxHeight: 600)
+    }
+}
 
-
+struct ImageYoutubePreview: View{
+    var imageUrl: String
+    var body: some View{
+        
+        ZStack{
+            AsyncImage(url: URL(string: imageUrl)) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .clipped()
+            } placeholder: {
+                Color.gray
+            }
+            
+            Image(systemName: "play.rectangle.fill")
+                .foregroundColor(.red)
+                
+        }
+        .cornerRadius(10)
+        .clipped()
+        
+    }
+}
 
 #Preview {
-    CardImage(imageUrl: "https://cdn.myanimelist.net/images/anime/10/47347.jpg")
+    CardImage(imageUrl: "")
 }

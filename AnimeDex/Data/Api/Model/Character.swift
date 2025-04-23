@@ -16,3 +16,11 @@ struct DataBodyCharacterBasic: Identifiable, Decodable {
         return mal_id ?? -1
     }
 }
+
+struct DataBodyCharacterByAnime: Decodable{
+    let characters: [DataBodyCharacterBasic]
+    let role: String?
+    
+}
+
+

@@ -40,6 +40,12 @@ struct HomeScreen: View {
                 ).onAppear{
                     viewModel.loadTopCharacters()
                 }
+                
+                ListProduces(
+                    onClick: {}, produces: viewModel.producers
+                ).onAppear{
+                    viewModel.loadAnimeDetail()
+                }
             }
         }
     }
@@ -77,8 +83,7 @@ struct ColorDemoModel: Identifiable, Hashable, Sendable {
         ColorDemoModel(title: "Yellow", summery: "A cheerful color", color: .yellow),
         ColorDemoModel(title: "Purple", summery: "A mysterious color", color: .purple),
         ColorDemoModel(title: "Orange", summery: "A vibrant color", color: .orange),
-        ColorDemoModel(title: "Pink", summery: "A soft and feminine color", color: .pink),
-        
+        ColorDemoModel(title: "Pink", summery: "A soft and feminine color", color: .pink)
     ]
 }
 
