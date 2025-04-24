@@ -14,15 +14,18 @@ class DetailAnimeViewModel: ObservableObject {
     private let episodeRepository: EpisodeRepository
     private var cancellables: Set<AnyCancellable> = []
     @Published var animeDetail: DataBodyAnimeDetail?
+    let idAnime: Int
     
     
-    init(animeRepository: AnimeRepository = AnimeRepository(api: Api.shared), episodeRepository: EpisodeRepository = EpisodeRepository(api: Api.shared)) {
+    init(animeRepository: AnimeRepository = AnimeRepository(api: Api.shared), episodeRepository: EpisodeRepository = EpisodeRepository(api: Api.shared),
+         idAnime: Int) {
         self.animeRepository = animeRepository
         self.episodeRepository = episodeRepository
+        self.idAnime = idAnime
     }
     
     func loadAnimeDetail(){
-        animeRepository.getAnimeDetail(id:"52991")
+        animeRepository.getAnimeDetail(id:String(idAnime))
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):

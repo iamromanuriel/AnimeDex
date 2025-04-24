@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListAnimeTop: View{
-    var onClick: () -> Void
+    var onClick: (Int) -> Void
     var animes: [DataBodyAnimeBasic]
     let rows = [GridItem(.flexible())]
     
@@ -17,13 +17,20 @@ struct ListAnimeTop: View{
             Text("Top Anime")
                 .font(.title2)
                 .fontWeight(.bold)
+                .foregroundColor(.white)
                 .padding()
             Spacer()
         }
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: rows) {
                 ForEach(animes) { anime in
-                    CardImage(imageUrl: anime.images?.jpg?.imageUrl)
+                    CardImage(
+                        imageUrl: anime.images?.jpg?.imageUrl,
+                        id: anime.mal_id ?? 0,
+                        onClick: { id in
+                            onClick(id)
+                        }
+                    )
                 }
             }
         }
@@ -39,6 +46,7 @@ struct ListCharacterTop: View {
             Text("Top Character")
                 .font(.title2)
                 .fontWeight(.bold)
+                .foregroundColor(.white)
                 .padding()
             Spacer()
         }
@@ -46,7 +54,13 @@ struct ListCharacterTop: View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: rows) {
                 ForEach(characters) { character in
-                    CardImage(imageUrl: character.images?.jpg?.imageUrl)
+                    CardImage(
+                        imageUrl: character.images?.jpg?.imageUrl,
+                        id: character.mal_id ?? 0,
+                        onClick: {id in
+                            
+                        }
+                    )
                 }
             }
         }
@@ -63,6 +77,7 @@ struct ListProduces: View {
             Text("Producers")
                 .font(.title2)
                 .fontWeight(.bold)
+                .foregroundColor(.white)
                 .padding()
             Spacer()
         }

@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct DetailAnimeScreen : View {
-    @StateObject var viewModel = DetailAnimeViewModel()
+    let idAnime: Int
+    @StateObject var viewModel : DetailAnimeViewModel
+    
+    init(idAnime: Int){
+        self.idAnime = idAnime
+        _viewModel = StateObject(wrappedValue: DetailAnimeViewModel(idAnime: idAnime))
+    }
     
     var body: some View {
         ScrollView {
-            
             ImageDetail(imageUrl: viewModel.animeDetail?.images?.jpg?.largeImageUrl ?? "",
                         title: viewModel.animeDetail?.title ?? ""
             )
@@ -78,5 +83,5 @@ struct DetailAnimeScreen : View {
 
 
 #Preview {
-    DetailAnimeScreen()
+    DetailAnimeScreen(idAnime: 0)
 }

@@ -25,17 +25,26 @@ struct CardBasic: View {
                 
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .aspectRatio(contentMode: .fit)
+            .onTapGesture {
+                print("onClick Item")
+            }
             
         }
         .frame(width: 150, height: 250)
         .background(Color.accentColor)
         .cornerRadius(10)
+        .onTapGesture {
+            print("onClick Item")
+        }
+        
     }
 }
 
 
 struct CardImage: View {
     let imageUrl: String?
+    let id: Int?
+    let onClick: (Int) -> Void
     
     var body: some View {
         ZStack {
@@ -69,6 +78,9 @@ struct CardImage: View {
         .frame(width: 180, height: 250)
         .cornerRadius(16)
         .clipped()
+        .onTapGesture {
+            onClick(id ?? 0)
+        }
     }
 }
 
@@ -90,6 +102,7 @@ struct ReferenceItem: View {
 
 struct ItemCarousel: View {
     var anime: DataBodyAnimeRecommendation
+    var onClick: (Int) -> Void
     
     var body: some View {
         ZStack {
@@ -141,6 +154,9 @@ struct ItemCarousel: View {
             
             
         }.frame(maxWidth: .infinity, maxHeight: 600)
+            .onTapGesture {
+                onClick(anime.entry.last?.id ?? 0)
+            }
     }
 }
 
@@ -211,5 +227,5 @@ struct ImageYoutubePreview: View{
 }
 
 #Preview {
-    CardImage(imageUrl: "")
+    CardImage(imageUrl: "", id: 0, onClick: { id in })
 }

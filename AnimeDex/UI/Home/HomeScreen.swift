@@ -9,8 +9,9 @@ import SwiftUI
 
 struct HomeScreen: View {
     @StateObject var viewModel = HomeViewModel()
-    @State private var scrollPosition: ScrollPosition = .init(idType: DataBodyAnimeBasic.ID.self)
     @State private var currentIndex: UUID = UUID()
+    let onClickAnime: (Int) -> Void
+    
     let colores: [Color] = [.red, .blue, .green, .yellow, .orange]
     let skateSize: CGSize = .init(width: 72, height: 300)
     var body: some View {
@@ -18,34 +19,33 @@ struct HomeScreen: View {
             ScrollView(){
                 TabView(selection: $currentIndex){
                     ForEach(viewModel.recommendedAnimes){ anime in
-                        ItemCarousel(anime: anime).tag(anime.id)
+                        ItemCarousel(
+                            anime: anime,
+                            onClick: {id in
+                                onClickAnime(id)
+                            }
+                        ).tag(anime.id)
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
                 .frame(height: 600)
-                .onAppear(){
-                    viewModel.loadRecommendedAnimes()
-                }
+                
                 
                 ListAnimeTop(
-                    onClick: {},
+                    onClick: { id in
+                        onClickAnime(id)
+                    },
                     animes: viewModel.topAnimes
-                ).onAppear{
-                    viewModel.loadTopAnimes()
-                }
+                )
                 
                 ListCharacterTop(
                     onClick: {  },
                     characters: viewModel.topCharacters
-                ).onAppear{
-                    viewModel.loadTopCharacters()
-                }
+                )
                 
                 ListProduces(
                     onClick: {}, produces: viewModel.producers
-                ).onAppear{
-                    viewModel.loadAnimeDetail()
-                }
+                )
             }
         }
     }
@@ -100,7 +100,13 @@ struct AutoScroller: View{
             
             TabView(selection: $selectedIndex){
                 ForEach(topAnimes){ anime in
-                    CardImage(imageUrl: anime.images?.jpg?.imageUrl)
+                    CardImage(
+                        imageUrl: anime.images?.jpg?.imageUrl,
+                        id: anime.id,
+                        onClick: {id in
+                            
+                        }
+                    )
                 }
             }.frame(height: 400)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -113,5 +119,7 @@ struct AutoScroller: View{
 
 
 #Preview {
-    HomeScreen()
+    HomeScreen(
+        onClickAnime: {id in}
+    )
 }

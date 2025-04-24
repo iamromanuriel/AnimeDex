@@ -27,6 +27,10 @@ class HomeViewModel: ObservableObject {
         self.animeRepository = animeRepository
         self.characterRepository = characterRepository
         self.producersRepository = producerRepository
+        
+        loadRecommendedAnimes()
+        loadTopAnimes()
+        loadTopCharacters()
     }
     
     func loadTopAnimes() {
