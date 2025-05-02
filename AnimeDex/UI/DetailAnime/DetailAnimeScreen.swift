@@ -72,7 +72,7 @@ struct DetailAnimeScreen : View {
             ImageYoutubePreview(imageUrl: viewModel.animeDetail?.trailer?.images?.jpg?.largeImageUrl ?? "")
                 .frame(width: 200, height: 200)
             
-            ListEpisodes()
+            ListEpisodes(episodes: viewModel.episodes)
             
         }.background(.black)
         

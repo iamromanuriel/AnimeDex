@@ -90,18 +90,4 @@ class HomeViewModel: ObservableObject {
             }).store(in: &cancellables)
     }
     
-    func loadAnimeDetail(){
-        animeRepository.getAnimeDetail(id:"52991")
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print("Error detail: \(error)")
-                case .finished:
-                    break
-                }
-            }, receiveValue: { response in
-                print(response)
-            }).store(in: &cancellables)
-    }
-    
 }

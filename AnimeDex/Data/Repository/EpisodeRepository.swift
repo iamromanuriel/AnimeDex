@@ -13,7 +13,7 @@ class EpisodeRepository{
     }
     
     func getEpisodes(id: String) -> AnyPublisher<ResponseBody<[EpisodeResponse]>, APIError>{
-        let url = "https://api.jikan.moe/v4/anime/\(id)/characters"
+        let url = "https://api.jikan.moe/v4/anime/\(id)/episodes"
         
         return api.request(url: url)
     }

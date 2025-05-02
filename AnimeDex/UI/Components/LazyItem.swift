@@ -96,20 +96,21 @@ struct ItemCircle: View {
 
 
 struct ItemEpisode: View {
+    var episode: EpisodeResponse?
     var body: some View {
         VStack{
             HStack{
-                Text("Bouken no Owari")
+                Text(episode?.title ?? "")
                     .foregroundColor(.white)
                     .bold()
                 Spacer()
-                Text("Sep 2023")
+                Text(episode?.aired ?? "")
                     .foregroundColor(.white)
                     
             }
             
             HStack{
-                Text("The Journey's End")
+                Text(String(episode?.score ?? 0))
                     .foregroundColor(.white)
                 Spacer()
                 Text("The Journey's End")

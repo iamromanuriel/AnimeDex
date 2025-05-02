@@ -96,6 +96,8 @@ struct ListProduces: View {
 
 
 struct ListEpisodes: View {
+    var episodes: [EpisodeResponse]?
+    
     var body: some View {
         HStack{
             Text("Episode")
@@ -107,8 +109,8 @@ struct ListEpisodes: View {
         }
         
         LazyVGrid(columns: [GridItem(.flexible())]) {
-            ForEach(1..<5){ index in
-                ItemEpisode()
+            ForEach(episodes ?? []){ episode in
+                ItemEpisode(episode: episode)
             }
         }
     }
@@ -117,7 +119,6 @@ struct ListEpisodes: View {
 
 #Preview {
     ZStack{
-        ListEpisodes()
     }
     .background(.black)
     
