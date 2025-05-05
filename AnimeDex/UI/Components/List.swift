@@ -43,7 +43,7 @@ struct ListCharacterTop: View {
     let rows = [GridItem(.flexible())]
     var body: some View {
         HStack{
-            Text("Top Character")
+            Text("Character")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.white)

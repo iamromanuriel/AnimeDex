@@ -20,4 +20,14 @@ class CharacterRepository {
         return api.request(url: url)
             
     }
+    
+    func getCharacterByIdAnime(idAnime: String) -> AnyPublisher<ResponseBody<[DataBodyCharacterInfoByAnime]>, APIError>{
+        let url = "https://api.jikan.moe/v4/anime/\(idAnime)/characters"
+        return api.request(url: url)
+    }
+    
+    func getCharacterById(idCharacter: String) -> AnyPublisher<ResponseBody<DataBodyCharacterBasic>, APIError>{
+        let url = "https://api.jikan.moe/v4/characters/\(idCharacter)"
+        return api.request(url: url)
+    }
 }

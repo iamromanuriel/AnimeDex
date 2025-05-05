@@ -31,6 +31,7 @@ class HomeViewModel: ObservableObject {
         loadRecommendedAnimes()
         loadTopAnimes()
         loadTopCharacters()
+        loadCharacterById()
     }
     
     func loadTopAnimes() {
@@ -87,6 +88,20 @@ class HomeViewModel: ObservableObject {
                 }
             }, receiveValue: { response in
                 self.producers = response.data
+            }).store(in: &cancellables)
+    }
+    
+    func loadCharacterById(){
+        characterRepository.getCharacterById(idCharacter: "19")
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error charactersById: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: { response in
+                    print("ResponseCharacter : \(response)")
             }).store(in: &cancellables)
     }
     

@@ -20,7 +20,9 @@ struct DataBodyCharacterBasic: Identifiable, Decodable {
 struct DataBodyCharacterByAnime: Decodable{
     let characters: [DataBodyCharacterBasic]
     let role: String?
-    
 }
 
-
+struct DataBodyCharacterInfoByAnime: Decodable{
+    let character: DataBodyCharacterBasic
+    let role: String?
+}

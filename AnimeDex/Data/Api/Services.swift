@@ -39,7 +39,7 @@ class Api {
                 .responseDecodable(of: T.self) { response in
                     switch response.result {
                     case .success(let decodedResponse):
-                        
+                        //print("Response decoded :: \(decodedResponse)")
                         promise(.success(decodedResponse))
                     case .failure:
                         

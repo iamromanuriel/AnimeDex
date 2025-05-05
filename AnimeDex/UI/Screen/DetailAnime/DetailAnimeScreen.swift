@@ -74,8 +74,9 @@ struct DetailAnimeScreen : View {
             
             ListEpisodes(episodes: viewModel.episodes)
             
+            ListCharacterTop(onClick: {  }, characters: viewModel.characters ?? [])
+            
         }.background(.black)
-        
         
     }
 }
