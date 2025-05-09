@@ -31,7 +31,6 @@ class HomeViewModel: ObservableObject {
         loadRecommendedAnimes()
         loadTopAnimes()
         loadTopCharacters()
-        loadCharacterById()
     }
     
     func loadTopAnimes() {

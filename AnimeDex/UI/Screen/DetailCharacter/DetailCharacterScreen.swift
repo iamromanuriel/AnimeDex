@@ -7,8 +7,13 @@
 import SwiftUI
 
 struct DetailCharacterScreen: View {
+    var characterId: Int?
     var body: some View {
-        Text("Detail Anime Screen")
+        ScrollView {
+            ImageDetail(imageUrl: "", title: "")
+        }
+        
+        
     }
 }
 

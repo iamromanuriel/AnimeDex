@@ -11,6 +11,7 @@ struct HomeScreen: View {
     @StateObject var viewModel = HomeViewModel()
     @State private var currentIndex: UUID = UUID()
     let onClickAnime: (Int) -> Void
+    let onClickCharacter: (Int) -> Void
     
     let colores: [Color] = [.red, .blue, .green, .yellow, .orange]
     let skateSize: CGSize = .init(width: 72, height: 300)
@@ -39,7 +40,9 @@ struct HomeScreen: View {
                 )
                 
                 ListCharacterTop(
-                    onClick: {  },
+                    onClick: { id in
+                        onClickCharacter(id)
+                    },
                     characters: viewModel.topCharacters
                 )
                 
@@ -120,6 +123,7 @@ struct AutoScroller: View{
 
 #Preview {
     HomeScreen(
-        onClickAnime: {id in}
+        onClickAnime: {id in},
+        onClickCharacter: { id in}
     )
 }

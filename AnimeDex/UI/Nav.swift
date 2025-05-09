@@ -10,6 +10,7 @@ import SwiftUI
 enum AppRoute:Hashable{
     case home
     case detail(Int)
+    case detailCharacter(Int)
 }
 
 
@@ -22,12 +23,18 @@ struct Navigation: View{
             HomeScreen(
                 onClickAnime: { id in
                     navigationPath.append(AppRoute.detail(id))
-                    print("onClickAnimeTop \(id)")
+                },
+                onClickCharacter: { id in
+                    navigationPath.append(AppRoute.detailCharacter(id))
+                    
                 }
             )
             .background(.black)
             .navigationDestination(for: AppRoute.self){ route in
                     switch route{
+                        
+                    case .detailCharacter(let id):
+                        DetailCharacterScreen(characterId: id)
                     case .detail(let id):
                         DetailAnimeScreen(idAnime: id)
                         

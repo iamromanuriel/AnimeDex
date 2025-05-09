@@ -38,7 +38,7 @@ struct ListAnimeTop: View{
 }
 
 struct ListCharacterTop: View {
-    var onClick: () -> Void
+    var onClick: (Int) -> Void
     var characters: [DataBodyCharacterBasic]
     let rows = [GridItem(.flexible())]
     var body: some View {
@@ -58,7 +58,7 @@ struct ListCharacterTop: View {
                         imageUrl: character.images?.jpg?.imageUrl,
                         id: character.mal_id ?? 0,
                         onClick: {id in
-                            
+                            onClick(id)
                         }
                     )
                 }
