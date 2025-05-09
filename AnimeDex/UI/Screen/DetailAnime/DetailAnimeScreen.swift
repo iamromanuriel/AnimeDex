@@ -84,5 +84,5 @@ struct DetailAnimeScreen : View {
 
 
 #Preview {
-    DetailAnimeScreen(idAnime: 0)
+    DetailAnimeScreen(idAnime: 12)
 }

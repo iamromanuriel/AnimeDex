@@ -90,18 +90,4 @@ class HomeViewModel: ObservableObject {
             }).store(in: &cancellables)
     }
     
-    func loadCharacterById(){
-        characterRepository.getCharacterById(idCharacter: "19")
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print("Error charactersById: \(error)")
-                case .finished:
-                    break
-                }
-            }, receiveValue: { response in
-                    print("ResponseCharacter : \(response)")
-            }).store(in: &cancellables)
-    }
-    
 }
