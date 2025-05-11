@@ -28,6 +28,7 @@ struct DetailCharacterScreen: View {
                 .foregroundColor(.white)
                 .padding()
         }
+        .navigationTitle(viewModel.character?.name ?? "")
         .background(.black)
         
         

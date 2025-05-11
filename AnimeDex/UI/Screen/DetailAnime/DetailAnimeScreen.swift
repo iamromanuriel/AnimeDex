@@ -21,9 +21,7 @@ struct DetailAnimeScreen : View {
             ImageDetail(imageUrl: viewModel.animeDetail?.images?.jpg?.largeImageUrl ?? "",
                         title: viewModel.animeDetail?.title ?? ""
             )
-                .onAppear {
-                    viewModel.loadAnimeDetail()
-                }
+                
             
             HStack(
                 spacing: 40
@@ -57,7 +55,7 @@ struct DetailAnimeScreen : View {
             
             HStack{
                 Text("Donde ver:").font(.caption2).foregroundColor(.white).bold()
-                Text(viewModel.animeDetail?.trailer?.images?.jpg?.imageUrl ?? "").font(.caption2).foregroundColor(.white)
+                Text(viewModel.animeDetail?.licensors?.first?.name ?? "").font(.caption2).foregroundColor(.white)
                 Spacer()
             }
             .padding(6)
@@ -69,14 +67,26 @@ struct DetailAnimeScreen : View {
             }
             .padding(6)
             
-            ImageYoutubePreview(imageUrl: viewModel.animeDetail?.trailer?.images?.jpg?.largeImageUrl ?? "")
-                .frame(width: 200, height: 200)
+            if let imageTriler = viewModel.animeDetail?.trailer?.images?.jpg?.largeImageUrl{
+                ImageYoutubePreview(imageUrl: imageTriler)
+                    .frame(width: 200, height: 200)
+            }
+            
+            
             
             ListEpisodes(episodes: viewModel.episodes)
+                .onAppear{
+                    viewModel.loadEpisodes()
+                }
             
             ListCharacterTop(onClick: { id in }, characters: viewModel.characters ?? [])
+                .onAppear{
+                    viewModel.loadCharacter()
+                }
             
-        }.background(.black)
+        }
+        .navigationTitle(viewModel.animeDetail?.title ?? "")
+        .background(.black)
         
     }
 }
@@ -84,5 +94,5 @@ struct DetailAnimeScreen : View {
 
 
 #Preview {
-    DetailAnimeScreen(idAnime: 12)
+    DetailAnimeScreen(idAnime: 22)
 }

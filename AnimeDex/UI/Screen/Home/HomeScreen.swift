@@ -37,18 +37,24 @@ struct HomeScreen: View {
                         onClickAnime(id)
                     },
                     animes: viewModel.topAnimes
-                )
+                ).onAppear {
+                    viewModel.loadTopAnimes()
+                }
                 
                 ListCharacterTop(
                     onClick: { id in
                         onClickCharacter(id)
                     },
                     characters: viewModel.topCharacters
-                )
+                ).onAppear{
+                    viewModel.loadTopCharacters()
+                }
                 
                 ListProduces(
                     onClick: {}, produces: viewModel.producers
-                )
+                ).onAppear{
+                    viewModel.loadProducers()
+                }
             }
         }
     }

@@ -29,8 +29,7 @@ class DetailAnimeViewModel: ObservableObject {
         self.episodeRepository = episodeRepository
         self.idAnime = idAnime
         self.characterRepository = characterRepository
-        loadEpisodes()
-        loadCharacter()
+        loadAnimeDetail()
     }
     
     func loadAnimeDetail(){
@@ -43,7 +42,8 @@ class DetailAnimeViewModel: ObservableObject {
                     break
                 }
             }, receiveValue: { response in
-                //print(response)
+                
+                print(response)
                 self.animeDetail = response.data
             }).store(in: &cancellables)
     }

@@ -29,8 +29,7 @@ class HomeViewModel: ObservableObject {
         self.producersRepository = producerRepository
         
         loadRecommendedAnimes()
-        loadTopAnimes()
-        loadTopCharacters()
+        
     }
     
     func loadTopAnimes() {

@@ -42,6 +42,8 @@ struct Navigation: View{
                         Text("")
                     }
                 }
+            
+            
         }
     }
 }
