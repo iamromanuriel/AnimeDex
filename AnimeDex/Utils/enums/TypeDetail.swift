@@ -8,4 +8,6 @@
 enum TypeDetail: String, CaseIterable {
     case Anime
     case Character
+    
+    
 }

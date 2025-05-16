@@ -9,8 +9,17 @@ import SwiftUI
 struct SearchScreen: View {
     var body: some View {
         NavigationView {
-            Text("Search Screen")
-                .navigationTitle(Text("Search"))
+            VStack{
+                ScrollView{
+                    
+                    LazyVGrid(columns: [GridItem()]){
+                        ForEach(1..<15){_ in
+                            ItemResultSearch()
+                        }
+                    }.navigationTitle(Text("Search"))
+                }
+            }
+            
         }
         
         

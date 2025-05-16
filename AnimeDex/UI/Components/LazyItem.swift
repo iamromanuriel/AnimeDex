@@ -120,11 +120,50 @@ struct ItemEpisode: View {
     }
 }
 
+struct ItemResultSearch: View {
+    var body: some View {
+        
+        HStack{
+            ZStack(alignment:.bottomTrailing){
+                AsyncImage(url: URL(string: "https://cdn.myanimelist.net/images/anime/4/78280.jpg")) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width:50,height: 50)
+                        .background(.gray)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                } placeholder: {
+                    Color.gray
+                        .frame( height: 100)
+                }
+                
+                Circle()
+                    .frame(width: 10, height: 10)
+                    .foregroundColor(.green)
+                    .padding(3)
+            }.padding()
+            
+            VStack(
+                alignment: HorizontalAlignment.leading
+            ){
+                Text("Boruto")
+                    .font(.title3)
+                    .bold()
+                Text("217 cap")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            Spacer()
+            
+        }.frame(maxWidth: .infinity)
+            
+    }
+}
 
 #Preview {
     HStack{
-        ItemEpisode()
-    }.background(.black)
+        ItemResultSearch()
+    }
     
 }
 
