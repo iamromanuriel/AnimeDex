@@ -226,6 +226,20 @@ struct ImageYoutubePreview: View{
     }
 }
 
+struct CollectionCard: View {
+    var body : some View{
+        VStack{
+            Text("12").padding(.vertical, 30).foregroundColor(.white)
+            Spacer()
+            Text("A recomendar").padding(.vertical, 10).foregroundColor(.white)
+        }
+        .frame(width: 150, height: 150)
+        .background(Color.gray.opacity(0.6))
+        .cornerRadius(10)
+        .clipped()
+    }
+}
+
 #Preview {
-    CardImage(imageUrl: "", id: 0, onClick: { id in })
+    CollectionCard()
 }

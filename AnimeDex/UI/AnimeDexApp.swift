@@ -45,7 +45,7 @@ struct MainTabView: View {
             }
 
             NavigationStack {
-                ProfileTabView()
+                ProfileScreen()
             }
             .tabItem {
                 Label("Perfil", systemImage: "person.crop.circle.fill")
